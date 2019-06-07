@@ -280,7 +280,7 @@ public:
     NoArvore <TYPE> *ptrEsquedo;
     TYPE data;
     NoArvore <TYPE> *ptrDireito;
-    int altura = 0;
+    int altura;
     NoArvore(const TYPE &d){
         ptrEsquedo = 0;
         data = d;
@@ -300,7 +300,6 @@ public:
 
     void insereNo(const TYPE &);
     TYPE busca(const TYPE &);
-    int altura(const TYPE &);
     // void percorrePreOrdem () const;
     // void percorreCentral () const;
     // void percorrePosOrdem () const;
@@ -309,7 +308,6 @@ private:
     NoArvore <TYPE> *ptrRaiz;
     TYPE ajudanteDeBusca (NoArvore <TYPE> **, const TYPE &);
     void ajudanteDeInsereNo (NoArvore <TYPE> **, const TYPE &);
-    int ajudanteDeAltura(NoArvore <TYPE> **, const TYPE &);
     // void ajudantePercorrePreOrdem (NoArvore <TYPE> *) const;
     // void ajudantePercorreCentral (NoArvore <TYPE> *) const;
     // void ajudantePercorrePosOrdem (NoArvore <TYPE> *) const;
@@ -320,46 +318,6 @@ template <class TYPE>
 Arvore<TYPE>::Arvore(){
     ptrRaiz = 0;
 }
-
-template <class TYPE>
-int Arvore<TYPE>::altura(const TYPE &item){
-    return ajudanteDeAltura(&ptrRaiz, item);
-}
-
-template <class TYPE>
-int Arvore<TYPE>::ajudanteDeAltura(NoArvore<TYPE> **ptr, const TYPE &item){
-    if(item == (*ptr)->data){
-        if(*ptr == 0){
-            return (*ptr)->altura;
-        }
-
-        else{
-            if(item < (*ptr)->data){
-                (*ptr)->altura += 1;
-                ajudanteDeAltura(&((*ptr)->ptrEsquedo), item);
-            }
-            else{
-                if(item > (*ptr)->data){
-                    (*ptr)->altura += 1;
-                    ajudanteDeAltura(&((*ptr)->ptrDireito), item);
-                }
-            }
-        }
-    }
-
-    else{
-        if(item < (*ptr)->data){
-            ajudanteDeAltura(&((*ptr)->ptrEsquedo), item);
-        }
-        else{
-            if(item > (*ptr)->data){
-                ajudanteDeAltura(&((*ptr)->ptrDireito), item);
-            }
-        }
-    }
-}
-
-
 
 template <class TYPE>
 TYPE Arvore<TYPE>::busca(const TYPE &item){
@@ -467,11 +425,11 @@ int main(){
     Arvore<int> arvoreInt;
     cout << "insira 10 valores inteiros\n";
 
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 3; i++){
         cin >> valor;
         arvoreInt.insereNo(valor);
     }
-    cout << arvoreInt.altura(3);
+    cout << arvoreInt.busca(2);
     // cout << "\nPre ordem\n";
     // arvoreInt.percorrePreOrdem();
     // cout << "\n\nCentral\n";
